@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+  C:  Varchar, capped to 255 characters.
+  X:  Larger varchar, capped to 4000 characters (to be compatible with Oracle). 
+  C2: Multibyte varchar
+  X2: Multibyte varchar (largest size)
+  B:  BLOB (binary large object)
+  D:  Date (some databases do not support this, and we return a datetime type)
+  T:  Datetime or Timestamp
+  L:  Integer field suitable for storing booleans (0 or 1)
+  I:  Integer (mapped to I4)
+  I1: 1-byte integer
+  I2: 2-byte integer
+  I4: 4-byte integer
+  I8: 8-byte integer
+  F:  Floating point number
+  N:  Numeric or decimal number
+  
+  Index types: CLUSTERED, BITMAP, UNIQUE, FULLTEXT, HASH
+
+-->
+<schema version="0.3">
+
+	<table name="phpsyndicateadmin">
+		<field name="id" type="I" size="11">
+			<NOTNULL/>
+			<AUTOINCREMENT/>
+			<KEY/>
+			<UNIQUE/>
+		</field>
+
+		<field name="loginname" type="C" size="25">
+			<NOTNULL/>
+			<UNIQUE/>
+		</field>
+
+		<field name="namelc" type="C" size="255">
+		</field>
+
+		<field name="email" type="C" size="255">
+		</field>
+
+		<field name="created" type="T">
+		</field>
+
+		<field name="modified" type="T">
+		</field>
+
+		<field name="modifiedby" type="C" size="25">
+		</field>
+
+		<field name="password" type="C" size="255">
+			<NOTNULL/>
+		</field>
+
+		<field name="passwordchanged" type="D">
+		</field>
+
+		<field name="superuser" type="I4" size="4">
+		</field>
+
+		<field name="disabled" type="I4" size="4">
+		</field>
+	</table>
+	
+	<table name="phpsyndicateattachment">
+		<field name="id" type="I" size="11">
+			<NOTNULL/>
+			<AUTOINCREMENT/>
+			<KEY/>
+			<UNIQUE/>
+		</field>
+		
+		<field name="filename" type="C" size="255">
+		</field>
+		
+		<field name="remotefile" type="C" size="255">
+		</field>
+		
+		<field name="mimetype" type="C" size="255">
+		</field>
+
+		<field name="description" type="X">
+		</field>
+		
+		<field name="size" type="I" size="11">
+		</field>
+	</table>
+	
+	<table name="phpsyndicatebccmail">
+		<field name="idbccMail" type="I" size="11">
+			<KEY/>
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+		
+		<field name="name" type="C" size="45">
+		</field>
+		
+		<field name="surname" type="C" size="45">
+		</field>
+		
+		<field name="email" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="MailMessage_idMailMessage" type="I" size="11">
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+
+	</table>
+	
+	<table name="phpsyndicateccmail">
+
+		<field name="idccMail" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="name" type="C" size="45">
+		</field>
+		
+		<field name="surname" type="C" size="45">
+		</field>
+		
+		<field name="email" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="MailMessage_idMailMessage" type="I" size="11">
+		</field>
+
+		<index name="fk_ccMail_MailMessage1">
+			<descr>Index on the typename</descr>
+			<col>MailMessage_idMailMessage</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<table name="phpsyndicateconfig">
+
+		<field name="item" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="value" type="X">
+		</field>
+		
+		<field name="editable" type="I4"/>
+		
+		<field name="type" type="C" size="25"/>
+		
+	</table>
+
+	<table name="phpsyndicatedo_not_send_list">
+
+		<field name="id" type="I" size="20">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+
+		<field name="email" type="C" size="20">
+			<NOTNULL/>
+		</field>
+
+		<field name="domain" type="C" size="20">
+			<NOTNULL/>
+		</field>
+
+		<field name="name" type="C" size="20">
+		</field>
+
+		<field name="comments" type="X">
+			<NOTNULL/>
+		</field>
+
+		<index name="email">
+			<descr>Index on the email</descr>
+			<col>email</col>
+		</index>
+	</table>
+
+	<table name="phpsyndicateeventlog">
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<UNIQUE/>
+			<NOTNULL/>
+			<AUTOINCREMENT/>
+		</field>
+
+		<field name="entered" type="D">
+		</field>
+
+		<field name="page" type="C" size="255">
+		</field>
+
+		<field name="entry" type="X">
+		</field>
+	</table>
+
+	<table name="phpsyndicatelinktrack">
+		<field name="linkid" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="messageid" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<field name="userid" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<field name="url" type="C" size="255">
+			<NOTNULL/>
+		</field>
+		
+		<field name="forward" type="X">
+			<NOTNULL/>
+		</field>
+		
+		<field name="firstclick" type="D">
+			<NOTNULL/>
+		</field>
+		
+		<field name="latestclick" type="T">
+			<NOTNULL/>
+		</field>
+		
+		<field name="clicked" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<index name="messageid">
+			<descr>Index on the message</descr>
+			<col>messageid</col>
+			<col>userid</col>
+			<col>url</col>
+			<UNIQUE/>
+		</index>
+		<index name="miduidurlindex">
+			<descr>Index</descr>
+			<col>messageid</col>
+			<col>userid</col>
+			<col>url</col>
+			<UNIQUE/>
+		</index>
+	</table>
+	
+	<table name="phpsyndicatemailmessage">
+		<field name="idMailMessage" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="title" type="C" size="50">
+		</field>
+		
+		<field name="body" type="X">
+		</field>
+
+		<field name="User_idUser" type="I" size="11">
+			<NOTNULL/>
+		</field>
+
+		<index name="fk_MailMessage_User">
+			<descr>Index</descr>
+			<col>User_idUser</col>
+		</index>
+	</table>
+
+	<table name="phpsyndicatemessage">
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<UNIQUE/>
+			<NOTNULL/>
+			<AUTOINCREMENT/>
+		</field>
+		
+		<field name="subject" type="C" size="255">
+			<NOTNULL/>
+		</field>
+
+		<field name="fromfield" type="C" size="255">
+			<NOTNULL/>
+		</field>
+
+		<field name="tofield" type="C" size="255">
+			<NOTNULL/>
+		</field>
+
+		<field name="replyto" type="C" size="255">
+			<NOTNULL/>
+		</field>
+
+		<field name="message" type="X">
+		</field>
+
+		<field name="footer" type="X">
+		</field>
+
+		<field name="entered" type="D">
+		</field>
+
+		<field name="modified" type="T">
+			<NOTNULL/>
+		</field>
+
+		<field name="status" type="C" size="255">
+		</field>
+
+		<field name="processed" type="I8">
+		</field>
+
+		<field name="userselection" type="X">
+		</field>
+
+		<field name="sent" type="D">
+		</field>
+
+		<field name="htmlformatted" type="I4">
+		</field>
+
+		<field name="sendformat" type="C" size="20">
+		</field>
+
+		<field name="template" type="I" size="11">
+		</field>
+
+		<field name="ashtml" type="I" size="11">
+		</field>
+
+		<field name="astext" type="I" size="11">
+		</field>
+
+		<field name="astextandhtml" type="I" size="11">
+		</field>
+
+		<field name="viewed" type="I" size="11">
+		</field>
+
+		<field name="bouncecount" type="I" size="11">
+		</field>
+
+		<field name="sendstart" type="D">
+		</field>
+
+		<field name="aspdf" type="I" size="11">
+		</field>
+
+		<field name="astextandpdf" type="I" size="11">
+		</field>
+
+		<field name="rsstemplate" type="C" size="100">
+		</field>
+
+		<field name="owner" type="I" size="11">
+		</field>
+
+		<field name="embargo" type="D">
+		</field>
+
+		<field name="repeatinterval" type="I" size="11">
+		</field>
+
+		<field name="repeatuntil" type="D">
+		</field>
+
+		<field name="textmessage" type="X">
+		</field>
+
+	</table>
+	
+	<table name="phpsyndicatemessagedata">
+		<field name="name" type="C" size="100">
+		</field>
+
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<UNIQUE/>
+			<NOTNULL/>
+			<AUTOINCREMENT/>
+		</field>
+
+		<field name="data" type="X">
+		</field>
+	</table>
+	
+	<table name="phpsyndicatemessage_attachment">
+		<field name="id" type="I" size="10">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+
+		<field name="messageid" type="I" size="11">
+			<NOTNULL/>
+		</field>
+
+		<field name="attachmentid" type="I" size="11">
+			<NOTNULL/>
+		</field>
+	</table>
+	
+	<table name="phpsyndicatephpsyndicate_user">
+
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+
+		<field name="email" type="C" size="255">
+			<NOTNULL/>
+			<UNIQUE/>
+		</field>
+		
+		<field name="confirmed" type="I4">
+		</field>
+		
+		<field name="entered" type="D">
+		</field>
+		
+		<field name="modified" type="T">
+			<NOTNULL/>
+		</field>
+		
+		<field name="uniqid" type="C" size="255">
+		</field>
+		
+		<field name="htmlemail" type="I4">
+		</field>
+		
+		<field name="bouncecount" type="I" size="11">
+		</field>
+		
+		<field name="subscribepage" type="I" size="11">
+		</field>
+		
+		<field name="rssfrequency" type="C" size="100">
+		</field>
+		
+		<field name="password" type="C" size="255">
+		</field>
+		
+		<field name="passwordchanged" type="D">
+		</field>
+		
+		<field name="disabled" type="I4">
+		</field>
+		
+		<field name="extradata" type="X">
+		</field>
+		
+		<field name="foreignkey" type="C" size="100">
+		</field>
+		
+		<field name="blacklisted" type="I4">
+		</field>
+		
+		<index name="fkey">
+			<descr>Index</descr>
+			<col>foreignkey</col>
+		</index>
+		
+		<index name="index_uniqid">
+			<descr>Index</descr>
+			<col>uniqid</col>
+		</index>
+	</table>
+	
+	<table name="phpsyndicatesendprocess">
+	
+		<field name="id" type="I" size="11">
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+			<KEY/>
+		</field>
+		
+		<field name="started" type="D">
+		</field>
+		
+		<field name="modified" type="T">
+			<NOTNULL/>
+		</field>
+		
+		<field name="alive" type="I" size="11">
+		</field>
+		
+		<field name="ipaddress" type="C" size="50">
+		</field>
+		
+		<field name="page" type="C" size="100">
+		</field>
+
+	</table>
+	
+	<table name="phpsyndicateuser">
+
+		<field name="idUser" type="I" size="20">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="username" type="C" size="20">
+			<NOTNULL/>
+		</field>
+		
+		<field name="name" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="surname" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="email" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="password" type="C" size="45">
+			<NOTNULL/>
+		</field>
+
+		<field name="isActivated" type="L">
+			<NOTNULL/>
+		</field>
+	
+		<field name="usertype" type="C" size="45">
+			<NOTNULL/>
+		</field>
+		
+		<field name="smtp_server" type="C" size="255">
+			<NOTNULL/>
+		</field>
+		
+		<field name="smtp_port" type="I" size="10">
+			<NOTNULL/>
+		</field>
+		
+		<field name="smtp_user" type="C" size="20">
+			<NOTNULL/>
+		</field>
+		
+		<field name="smtp_pass" type="C" size="20">
+			<NOTNULL/>
+		</field>
+		
+	</table>
+	
+	<table name="phpsyndicateusermessage">
+		<field name="messageid" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="userid" type="I" size="11">
+			<KEY/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="entered" type="D">
+		</field>
+
+		<field name="viewed" type="D">
+		</field>
+
+		<field name="status" type="C" size="255">
+		</field>
+
+		<index name="userindex">
+			<descr>Index on the username</descr>
+			<col>userid</col>
+			<UNIQUE/>
+		</index>
+
+		<index name="messageindex">
+			<descr>Index on the message</descr>
+			<col>messageid</col>
+			<UNIQUE/>
+		</index>
+
+		<index name="enteredindex">
+			<descr>Index on the entered</descr>
+			<col>entered</col>
+			<UNIQUE/>
+		</index>
+
+	</table>
+	
+	<table name="phpsyndicateuserstats">
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+
+		<field name="unixdate" type="I" size="11">
+		</field>
+
+		<field name="item" type="C" size="255">
+		</field>
+
+		<field name="listid" type="I" size="11">
+		</field>
+
+		<field name="value" type="I" size="11">
+		</field>
+	</table>
+	
+	<table name="phpsyndicateuser_blacklist_data">
+		<field name="email" type="I" size="11">
+			<KEY/>
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+
+		<field name="name" type="C" size="100">
+			<NOTNULL/>
+		</field>
+
+		<field name="data" type="X">
+			<NOTNULL/>
+		</field>
+
+	</table>
+
+	<table name="phpsyndicateuser_message_forward">
+
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+		
+		<field name="user" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<field name="message" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<field name="forward" type="C" size="255"/>
+		
+		<field name="status" type="C" size="255">
+		</field>
+		
+		<field name="time" type="T">
+			<NOTNULL/>
+		</field>
+	</table>
+	
+	<table name="phpsyndicateuser_user_history">
+		<field name="id" type="I" size="11">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		
+		<field name="userid" type="I" size="11">
+			<NOTNULL/>
+		</field>
+		
+		<field name="ip" type="C" size="255">
+		</field>
+
+		<field name="date" type="D">
+		</field>
+
+		<field name="summary" type="C" size="255">
+		</field>
+
+		<field name="detail" type="X">
+		</field>
+
+		<field name="systeminfo" type="X">
+		</field>
+	</table>
+	
+	<table name="phpsyndicate_metadata">
+		<field name="metadata_id" type="I" size="10">
+			<KEY/>
+			<AUTOINCREMENT/>
+			<UNIQUE/>
+			<NOTNULL/>
+		</field>
+		<field name="record_id" type="I">
+			<NOTNULL/>
+		</field>
+		<field name="mediatype_id" type="I">
+			<NOTNULL/>
+		</field>
+		<field name="user_id" type="I">
+			<NOTNULL/>
+		</field>
+		<field name="type_id" type="I">
+			<NOTNULL/>
+		</field>
+		<field name="metadata_value" type="C" size="250">
+			<NOTNULL/>
+		</field>
+	</table>
+
+	<table name="phpsyndicatesmtp_profile">
+		<field name="profileid" type="I" size="20">
+			<KEY/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="profilenickname" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="username" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="smtp_server" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="smtp_port" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="smtp_user" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="smtp_pass" type="C" size="99">
+			<NOTNULL/>
+		</field>
+		<field name="email" type="C" size="50">
+			<NOTNULL/>
+		</field>
+	</table>
+	
+	<table name="phpsyndicate_settings">
+		<field name="settings_id" type="I" size="10">
+			<KEY/>
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="settings_key" type="C" size="50">
+			<NOTNULL/>
+		</field>
+		<field name="settings_value" type="C" size="255">
+			<NOTNULL/>
+		</field>
+		<field name="settings_description" type="C" size="255"/>
+		<field name="isProtected" type="I1"/>
+		<field name="settings_type" type="C" size="20"/>
+	</table>
+		
+	<table name="phpsyndicateinterrupted_sessions">
+		<field name="session_id" type="I" size="20">
+			<KEY/>
+			<NOTNULL/>
+			<UNIQUE/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="username" type="C" size="30">
+		</field>
+		<field name="output" type="X" size="3999">
+		</field>
+		<field name="progress" type="C" size="10">
+		</field>
+		<field name="event_id" type="I" size="20">
+		</field>
+	</table>
+</schema>
