@@ -1,0 +1,1 @@
+user1@mydomain1.com;user2@mydomain1.com;user3@mydomain1.com

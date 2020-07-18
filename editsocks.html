@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>PHP Mass Mailer - Edit SOCKS</title>
+<META HTTP-EQUIV='Content-Type: text/html; Charset=iso-8859-1 http-equiv=Content-Type'>
+<script type='text/javascript' language='JavaScript'>
+</script>
+
+<?php 
+	include("vars.inc.php") 
+?>
+
+<style type='text/css'>
+
+        <!--
+
+        INPUT, TEXTAREA, SELECT {
+                font:10px Verdana, Times, Arial, serif, sans-serif;
+                background-color: white;
+                border:1px solid silver
+        }
+
+        TABLE, #x78y {
+                font:12px Verdana, Times, Arial, serif, sans-serif;
+        }
+
+        BODY {
+                background-color: white
+        }
+
+        #mybr {
+                clear: left
+        }
+
+        #x34y  {
+                float:left
+        }
+
+        #x35y {
+                 border:solid silver 1.0pt;
+        }
+
+        #x77y {
+                color:white;
+                text-align: center
+        }
+
+        #x78y {
+                color:white;
+                text-align: right
+        }
+
+        #x79y {
+                background-color: gray;
+                border-style:none
+        }
+
+        A:link, A:visited,  A:active {
+                font:10px Verdana, Times, Arial, serif, sans-serif;
+                color: white;
+                font-weight: bold
+        }
+
+        -->
+
+</style>
+</head>
+<body>
+
+<table id ='x79y' height=22 width=100%>
+<tr>
+    <td id = 'x79y'>
+         <DIV id ='x77y'>
+		 <a href='index.php'>Home</a>
+         </DIV>
+    </td>
+</tr>
+</table> <br />
+
+<center>
+
+<table width=30%>
+
+<p><b>Add a new SOCKS IP</b></p>
+
+<form method="POST" action="addsocks.php">
+<tr>
+<td>IP: <input type="text" name="host" size="20" value="host"></td>
+<td>Port: <input type="text" name="port" size="20" value="25"></td>
+<input type="submit" value="Add" name="add">
+</tr>
+</form>
+
+</table>
+
+<table width=30%>
+
+<p><b>Remove a SOCKS IP</b></p>
+
+<form method="POST" action="removesocks.php">
+<tr>
+<td align="center">IP: <input type="text" name="host2remove" size="20" value="host2remove"></td>
+<input type="submit" value="Remove" name="remove">
+</tr>
+</form>
+
+</table>
+
+</center>
+
+<p></p>
+
+<center>
+
+<table id ='x79y' height=22 width=100%>
+<tr>
+   <td id = 'x79y'>
+      <DIV id ='x78y'>PHP Mass Mailer &copy; Papakirikou Evangelos </DIV>
+   </td>
+</tr>
+</table>
+
+</center>
+
+</body>
+</html> 
