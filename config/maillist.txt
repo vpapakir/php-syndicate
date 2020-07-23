@@ -1,1 +1,2 @@
+papakiru@cti.gr;papakiru@ceid.upatras.gr
 user1@mydomain1.com;user2@mydomain1.com;user3@mydomain1.com
